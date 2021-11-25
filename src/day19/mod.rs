@@ -60,12 +60,11 @@ fn split_molecules(molecule: &str) -> Vec<String> {
         .filter(|(a, _)| a.is_uppercase())
     {
         let mut a_str = a.to_string();
-        if b.is_uppercase() {
-            result.push(a_str);
-        } else {
+        if !b.is_uppercase() {
             a_str.push(b);
-            result.push(a_str);
         }
+
+        result.push(a_str);
     }
 
     if let Some(ch) = molecule.chars().last() {
