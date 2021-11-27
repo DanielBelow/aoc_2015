@@ -1,6 +1,3 @@
-#![allow(dead_code)]
-#![allow(unused_imports)]
-
 use aoc_runner_derive::{aoc, aoc_generator};
 use parse_display::{Display, FromStr};
 use std::collections::HashSet;
