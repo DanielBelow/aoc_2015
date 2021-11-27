@@ -1,5 +1,5 @@
 use aoc_runner_derive::{aoc, aoc_generator};
-use itertools::Itertools;
+use itertools::{iproduct, Itertools};
 use parse_display::{Display, FromStr};
 
 #[derive(Copy, Clone, Debug)]
@@ -109,54 +109,37 @@ fn is_winning(items: &[Item], mut own_hp: u32, mut enemy: EnemyStats) -> bool {
     }
 }
 
+fn generate_combinations(max_amount: usize, items: &[Item]) -> Vec<Vec<Item>> {
+    (0..=max_amount).fold(vec![], |acc, len| {
+        items
+            .iter()
+            .copied()
+            .combinations(len)
+            .fold(acc, |mut acc, it| {
+                acc.push(it);
+                acc
+            })
+    })
+}
+
 fn get_item_combinations() -> Vec<Vec<Item>> {
-    let mut result = Vec::new();
-
+    // 1 Weapon
     let weapons = generate_weapons();
-    let armor = generate_armor();
-    let rings = generate_rings();
+    // 0-1 Armor
+    let armor = generate_combinations(1, &generate_armor());
+    // 0-2 Rings
+    let rings = generate_combinations(2, &generate_rings());
 
-    for &weap in &weapons {
-        result.push(vec![weap]);
-    }
-
-    // A weapon + armor
-    for &weap in &weapons {
-        for &arm in &armor {
-            result.push(vec![weap, arm]);
-        }
-    }
-
-    // A weapon + 1-2 rings
-    for &weap in &weapons {
-        for &rin in &rings {
-            result.push(vec![weap, rin]);
-        }
-
-        for mut rins in rings.iter().copied().combinations(2) {
-            rins.push(weap);
-
-            result.push(rins);
-        }
-    }
-
-    // A weapon + armor + 1-2 rings
-    for &weap in &weapons {
-        for &arm in &armor {
-            for &rin in &rings {
-                result.push(vec![weap, arm, rin]);
-            }
-
-            for mut rins in rings.iter().copied().combinations(2) {
-                rins.push(weap);
-                rins.push(arm);
-
-                result.push(rins);
-            }
-        }
-    }
-
-    result
+    iproduct!(weapons, armor, rings)
+        .map(|(w, a, r)| {
+            vec![w]
+                .iter()
+                .chain(a.iter())
+                .chain(r.iter())
+                .copied()
+                .collect_vec()
+        })
+        .collect_vec()
 }
 
 #[aoc(day21, part1)]
