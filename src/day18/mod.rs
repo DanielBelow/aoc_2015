@@ -23,7 +23,7 @@ fn count_neighbours(grid: &[Vec<char>], row: usize, col: usize, grid_size: usize
         match (x, y) {
             (Some(x), Some(y)) if x < grid_size && y < grid_size => {
                 let neighbour = grid[x][y];
-                count += if neighbour == LIGHT_ON { 1 } else { 0 };
+                count += usize::from(neighbour == LIGHT_ON);
             }
             _ => {}
         };
@@ -58,7 +58,7 @@ fn single_step(grid: &[Vec<char>]) -> Vec<Vec<char>> {
     result
 }
 
-fn turn_on_corner_lights(grid: &mut Vec<Vec<char>>, grid_size: usize) {
+fn turn_on_corner_lights(grid: &mut [Vec<char>], grid_size: usize) {
     grid[0][0] = LIGHT_ON;
     grid[0][grid_size] = LIGHT_ON;
     grid[grid_size][0] = LIGHT_ON;

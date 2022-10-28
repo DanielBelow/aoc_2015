@@ -1,4 +1,5 @@
 use aoc_runner_derive::{aoc, aoc_generator};
+use aoc_util::iterator_ext::IteratorExt;
 use itertools::iproduct;
 use parse_display::{Display, FromStr};
 
@@ -66,7 +67,7 @@ pub fn part1(insts: &[Instruction]) -> usize {
         };
     }
 
-    g.lights.iter().filter(|it| **it).count()
+    g.lights.iter().count_if(|it| **it)
 }
 
 #[aoc(day6, part2)]

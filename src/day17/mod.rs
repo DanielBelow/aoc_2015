@@ -11,8 +11,8 @@ fn get_combinations(nums: &[usize], target: usize) -> Vec<Vec<usize>> {
         .filter_map(|len| {
             let matching = nums
                 .iter()
+                .copied()
                 .combinations(len)
-                .map(|it| it.iter().map(|it| **it).collect_vec())
                 .filter(|comb| comb.iter().sum::<usize>() == target)
                 .collect_vec();
             if matching.is_empty() {
@@ -30,15 +30,11 @@ pub fn part1(nums: &[usize]) -> usize {
     get_combinations(nums, 150).len()
 }
 
-fn count_min_containers(combs: &mut Vec<Vec<usize>>) -> Option<usize> {
-    combs.sort_by_key(std::vec::Vec::len);
+fn count_min_containers(combs: &mut [Vec<usize>]) -> Option<usize> {
+    combs.sort_by_key(Vec::len);
 
-    let len = combs.first().map(std::vec::Vec::len)?;
-    combs
-        .iter()
-        .counts_by(std::vec::Vec::len)
-        .get(&len)
-        .copied()
+    let len = combs.first().map(Vec::len)?;
+    combs.iter().counts_by(Vec::len).get(&len).copied()
 }
 
 #[aoc(day17, part2)]

@@ -1,16 +1,10 @@
-use aoc_runner_derive::{aoc, aoc_generator};
-
-#[aoc_generator(day4)]
-pub fn generate(inp: &str) -> String {
-    inp.to_string()
-}
+use aoc_runner_derive::aoc;
 
 fn generate_md5(secret_key: &str, number: u64) -> String {
-    let mut text = secret_key.to_string();
-    text.push_str(number.to_string().as_str());
+    let text = format!("{secret_key}{number}");
 
     let digest = md5::compute(text);
-    format!("{:x}", digest)
+    format!("{digest:x}")
 }
 
 #[aoc(day4, part1)]

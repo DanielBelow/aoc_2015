@@ -1,4 +1,5 @@
 use aoc_runner_derive::{aoc, aoc_generator};
+use aoc_util::iterator_ext::IteratorExt;
 use parse_display::{Display, FromStr};
 
 #[derive(Display, FromStr, Debug)]
@@ -44,7 +45,7 @@ impl BoxDimensions {
 #[aoc_generator(day2)]
 pub fn generate(inp: &str) -> Vec<BoxDimensions> {
     inp.lines()
-        .filter_map(|it| it.parse().map_err(|e| panic!("{:?}", e)).ok())
+        .filter_map(|it| it.parse().map_err(|e| panic!("{e:?}")).ok())
         .collect()
 }
 
@@ -62,7 +63,7 @@ fn ribbon_length(box_dim: &BoxDimensions) -> Option<usize> {
 
 #[aoc(day2, part1)]
 pub fn part1(v: &[BoxDimensions]) -> usize {
-    v.iter().map(calculate_paper).sum()
+    v.iter().sum_by(calculate_paper)
 }
 
 #[aoc(day2, part2)]

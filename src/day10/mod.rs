@@ -21,12 +21,9 @@ fn get_next_num(n: &str) -> String {
 }
 
 fn play_n_rounds(n: usize, start_num: &str) -> usize {
-    let mut cur = start_num.to_string();
-    for _ in 0..n {
-        cur = get_next_num(&cur);
-    }
-
-    cur.len()
+    (0..n)
+        .fold(start_num.to_string(), |acc, _| get_next_num(&acc))
+        .len()
 }
 
 #[allow(clippy::trivially_copy_pass_by_ref)]

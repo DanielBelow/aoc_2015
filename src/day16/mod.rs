@@ -19,7 +19,7 @@ pub struct Sue {
 }
 
 fn get_regex(s: &str) -> Regex {
-    let pattern = format!("{}: ([0-9]+)", s);
+    let pattern = format!("{s}: ([0-9]+)");
     Regex::new(&pattern).unwrap()
 }
 

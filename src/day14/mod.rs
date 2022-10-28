@@ -64,7 +64,7 @@ pub fn part1(data: &[Reindeer]) -> u64 {
 }
 
 #[aoc(day14, part2)]
-pub fn part2(data: &[Reindeer]) -> i64 {
+pub fn part2(data: &[Reindeer]) -> Option<i64> {
     let mut reindeer_points = HashMap::new();
     for t in 1..=2_503 {
         let leading_reindeer = leading_reindeer_after(data, t);
@@ -76,7 +76,7 @@ pub fn part2(data: &[Reindeer]) -> i64 {
         }
     }
 
-    *reindeer_points.values().max().unwrap()
+    reindeer_points.values().copied().max()
 }
 
 #[cfg(test)]

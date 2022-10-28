@@ -1,4 +1,5 @@
 use aoc_runner_derive::{aoc, aoc_generator};
+use aoc_util::iterator_ext::IteratorExt;
 use itertools::Itertools;
 
 #[aoc_generator(day5)]
@@ -8,8 +9,7 @@ pub fn generate(inp: &str) -> Vec<String> {
 
 fn contains_vowels(num: usize, text: &str) -> bool {
     text.chars()
-        .filter(|it| matches!(it, 'a' | 'e' | 'i' | 'o' | 'u'))
-        .count()
+        .count_if(|it| matches!(it, 'a' | 'e' | 'i' | 'o' | 'u'))
         >= num
 }
 
@@ -51,13 +51,13 @@ fn is_nice_string_p2(text: &str) -> bool {
 #[aoc(day5, part1)]
 pub fn part1(v: &[String]) -> usize {
     v.iter()
-        .fold(0, |acc, it| acc + if is_nice_string_p1(it) { 1 } else { 0 })
+        .fold(0, |acc, it| acc + usize::from(is_nice_string_p1(it)))
 }
 
 #[aoc(day5, part2)]
 pub fn part2(v: &[String]) -> u64 {
     v.iter()
-        .fold(0, |acc, it| acc + if is_nice_string_p2(it) { 1 } else { 0 })
+        .fold(0, |acc, it| acc + u64::from(is_nice_string_p2(it)))
 }
 
 #[cfg(test)]

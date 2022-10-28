@@ -20,9 +20,7 @@ fn deliver_presents(directions: &[char], visited_houses: &mut HashSet<(i64, i64)
             _ => panic!("Invalid direction"),
         };
 
-        if !visited_houses.contains(&(x, y)) {
-            visited_houses.insert((x, y));
-        }
+        visited_houses.insert((x, y));
     }
 }
 

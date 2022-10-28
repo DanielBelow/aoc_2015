@@ -36,12 +36,12 @@ pub fn generate(inp: &str) -> Vec<Instruction> {
 
 fn set_pc(pc: &mut usize, offset: i32) -> bool {
     if offset < 0 {
-        match pc.checked_sub(offset.abs() as usize) {
+        match pc.checked_sub(offset.unsigned_abs() as usize) {
             None => return false,
             Some(npc) => *pc = npc,
         };
     } else {
-        *pc += offset.abs() as usize;
+        *pc += offset.unsigned_abs() as usize;
     }
 
     true

@@ -1,4 +1,5 @@
 use aoc_runner_derive::{aoc, aoc_generator};
+use aoc_util::iterator_ext::IteratorExt;
 use lazy_static::lazy_static;
 use regex::Regex;
 
@@ -21,7 +22,7 @@ fn string_value(s: &str) -> usize {
 
 #[aoc(day8, part1)]
 pub fn part1(lines: &[String]) -> usize {
-    lines.iter().map(|it| it.len() - string_value(it)).sum()
+    lines.iter().sum_by(|it| it.len() - string_value(it))
 }
 
 #[aoc(day8, part2)]

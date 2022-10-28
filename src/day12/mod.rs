@@ -2,7 +2,7 @@ use aoc_runner_derive::{aoc, aoc_generator};
 use serde_json::{Map, Value};
 
 #[aoc_generator(day12)]
-pub fn generate(inp: &str) -> serde_json::Value {
+pub fn generate(inp: &str) -> Value {
     inp.parse().unwrap()
 }
 
@@ -14,25 +14,24 @@ fn is_red_object(obj: &Map<String, Value>) -> bool {
     obj.values().any(is_red)
 }
 
-fn sum_numbers(json: &serde_json::Value, include_red: bool) -> i64 {
+fn sum_numbers(json: &Value, include_red: bool) -> i64 {
     match json {
-        Value::Null | Value::Bool(_) | Value::String(_) => 0,
         Value::Number(n) => n.as_i64().unwrap_or_default(),
         Value::Array(a) => a.iter().map(|it| sum_numbers(it, include_red)).sum(),
         Value::Object(o) if include_red || !is_red_object(o) => {
             o.values().map(|it| sum_numbers(it, include_red)).sum()
         }
-        Value::Object(_) => 0,
+        Value::Object(_) | Value::Null | Value::Bool(_) | Value::String(_) => 0,
     }
 }
 
 #[aoc(day12, part1)]
-pub fn part1(inp: &serde_json::Value) -> i64 {
+pub fn part1(inp: &Value) -> i64 {
     sum_numbers(inp, true)
 }
 
 #[aoc(day12, part2)]
-pub fn part2(inp: &serde_json::Value) -> i64 {
+pub fn part2(inp: &Value) -> i64 {
     sum_numbers(inp, false)
 }
 

@@ -10,16 +10,14 @@ edition = "2021"
 path = "src/lib.rs"
 
 [dependencies]
+aoc_util = { git = "https://github.com/DanielBelow/aoc_util" }
 aoc-runner = "0.3.0"
 aoc-runner-derive = "0.3.0"
 itertools = "0.10.1"
-parse-display = "0.5.3"
-parse-display-derive = "0.5.3"
+parse-display = "0.6.0"
+parse-display-derive = "0.6.0"
 
 md5 = "0.7.0"
 regex = "1.5.4"
 lazy_static = "1.4.0"
 serde_json = "1.0.71"
-
-[profile.test]
-opt-level = 3
