@@ -1,5 +1,4 @@
 use aoc_runner_derive::{aoc, aoc_generator};
-use aoc_util::iterator_ext::IteratorExt;
 use parse_display::{Display, FromStr};
 
 #[derive(Display, FromStr, Debug)]
@@ -63,7 +62,7 @@ fn ribbon_length(box_dim: &BoxDimensions) -> Option<usize> {
 
 #[aoc(day2, part1)]
 pub fn part1(v: &[BoxDimensions]) -> usize {
-    v.iter().sum_by(calculate_paper)
+    v.iter().map(calculate_paper).sum()
 }
 
 #[aoc(day2, part2)]

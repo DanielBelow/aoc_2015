@@ -1,5 +1,4 @@
 use aoc_runner_derive::{aoc, aoc_generator};
-use aoc_util::iterator_ext::IteratorExt;
 use itertools::iproduct;
 use parse_display::{Display, FromStr};
 
@@ -23,16 +22,16 @@ pub enum Instruction {
 }
 
 struct Grid<T>
-where
-    T: Default + Clone,
+    where
+        T: Default + Clone,
 {
     lights: Vec<T>,
     size: usize,
 }
 
 impl<T> Grid<T>
-where
-    T: Default + Clone,
+    where
+        T: Default + Clone,
 {
     fn with_size(size: usize) -> Self {
         Self {
@@ -67,7 +66,7 @@ pub fn part1(insts: &[Instruction]) -> usize {
         };
     }
 
-    g.lights.iter().count_if(|it| **it)
+    g.lights.iter().filter(|it| **it).count()
 }
 
 #[aoc(day6, part2)]

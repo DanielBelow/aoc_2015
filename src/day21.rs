@@ -1,5 +1,4 @@
 use aoc_runner_derive::{aoc, aoc_generator};
-use aoc_util::iterator_ext::IteratorExt;
 use itertools::{iproduct, Itertools};
 use parse_display::{Display, FromStr};
 
@@ -71,11 +70,11 @@ fn generate_rings() -> Vec<Item> {
         (40, 0, 2),
         (80, 0, 3),
     ]
-    .iter()
-    .fold(Vec::new(), |mut acc, &(cost, dmg, armor)| {
-        acc.push(Item { cost, dmg, armor });
-        acc
-    })
+        .iter()
+        .fold(Vec::new(), |mut acc, &(cost, dmg, armor)| {
+            acc.push(Item { cost, dmg, armor });
+            acc
+        })
 }
 
 #[derive(Display, FromStr, Copy, Clone, Debug)]
@@ -92,8 +91,8 @@ pub fn generate(inp: &str) -> Option<EnemyStats> {
 }
 
 fn is_winning(items: &[Item], mut own_hp: u32, mut enemy: EnemyStats) -> bool {
-    let own_dmg = items.iter().sum_by(|it| it.dmg);
-    let own_arm = items.iter().sum_by(|it| it.armor);
+    let own_dmg = items.iter().map(|it| it.dmg).sum::<u32>();
+    let own_arm = items.iter().map(|it| it.armor).sum::<u32>();
 
     loop {
         let dmg_dealt = own_dmg.checked_sub(enemy.armor).unwrap_or(1);
@@ -148,7 +147,7 @@ pub fn part1(inp: &EnemyStats) -> Option<u32> {
     get_item_combinations()
         .iter()
         .filter(|it| is_winning(it, 100, *inp))
-        .map(|it| it.iter().sum_by(|i| i.cost))
+        .map(|it| it.iter().map(|i| i.cost).sum())
         .min()
 }
 
@@ -157,7 +156,7 @@ pub fn part2(inp: &EnemyStats) -> Option<u32> {
     get_item_combinations()
         .iter()
         .filter(|it| !is_winning(it, 100, *inp))
-        .map(|it| it.iter().sum_by(|i| i.cost))
+        .map(|it| it.iter().map(|i| i.cost).sum())
         .max()
 }
 
@@ -181,8 +180,8 @@ mod tests {
             EnemyStats {
                 hp: 12,
                 dmg: 7,
-                armor: 2
-            }
+                armor: 2,
+            },
         ));
     }
 }

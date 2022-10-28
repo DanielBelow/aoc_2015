@@ -10,7 +10,6 @@ edition = "2021"
 path = "src/lib.rs"
 
 [dependencies]
-aoc_util = { git = "https://github.com/DanielBelow/aoc_util" }
 aoc-runner = "0.3.0"
 aoc-runner-derive = "0.3.0"
 itertools = "0.10.1"

@@ -1,5 +1,4 @@
 use aoc_runner_derive::{aoc, aoc_generator};
-use aoc_util::iterator_ext::IteratorExt;
 use itertools::Itertools;
 
 #[aoc_generator(day5)]
@@ -9,7 +8,8 @@ pub fn generate(inp: &str) -> Vec<String> {
 
 fn contains_vowels(num: usize, text: &str) -> bool {
     text.chars()
-        .count_if(|it| matches!(it, 'a' | 'e' | 'i' | 'o' | 'u'))
+        .filter(|it| matches!(it, 'a' | 'e' | 'i' | 'o' | 'u'))
+        .count()
         >= num
 }
 
