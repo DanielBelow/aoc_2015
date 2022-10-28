@@ -70,11 +70,11 @@ fn generate_rings() -> Vec<Item> {
         (40, 0, 2),
         (80, 0, 3),
     ]
-        .iter()
-        .fold(Vec::new(), |mut acc, &(cost, dmg, armor)| {
-            acc.push(Item { cost, dmg, armor });
-            acc
-        })
+    .iter()
+    .fold(Vec::new(), |mut acc, &(cost, dmg, armor)| {
+        acc.push(Item { cost, dmg, armor });
+        acc
+    })
 }
 
 #[derive(Display, FromStr, Copy, Clone, Debug)]

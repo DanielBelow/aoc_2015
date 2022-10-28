@@ -22,16 +22,16 @@ pub enum Instruction {
 }
 
 struct Grid<T>
-    where
-        T: Default + Clone,
+where
+    T: Default + Clone,
 {
     lights: Vec<T>,
     size: usize,
 }
 
 impl<T> Grid<T>
-    where
-        T: Default + Clone,
+where
+    T: Default + Clone,
 {
     fn with_size(size: usize) -> Self {
         Self {

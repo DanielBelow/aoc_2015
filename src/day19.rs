@@ -79,7 +79,10 @@ fn split_molecules(molecule: &str) -> Vec<String> {
 fn count_steps(molecule: &str) -> usize {
     let molecules = split_molecules(molecule);
     let total = molecules.len();
-    let num_rn_ar = molecules.iter().filter(|it| it.eq(&"Rn") || it.eq(&"Ar")).count();
+    let num_rn_ar = molecules
+        .iter()
+        .filter(|it| it.eq(&"Rn") || it.eq(&"Ar"))
+        .count();
     let num_y = molecules.iter().filter(|it| it.eq(&"Y")).count();
 
     total - num_rn_ar - 2 * num_y - 1
