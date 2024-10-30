@@ -10,15 +10,15 @@ pub struct BoxDimensions {
 }
 
 impl BoxDimensions {
-    fn side_a(&self) -> usize {
+    const fn side_a(&self) -> usize {
         self.length * self.width
     }
 
-    fn side_b(&self) -> usize {
+    const fn side_b(&self) -> usize {
         self.width * self.height
     }
 
-    fn side_c(&self) -> usize {
+    const fn side_c(&self) -> usize {
         self.height * self.length
     }
 
@@ -28,11 +28,11 @@ impl BoxDimensions {
         dims
     }
 
-    pub fn volume(&self) -> usize {
+    pub const fn volume(&self) -> usize {
         self.length * self.width * self.height
     }
 
-    pub fn surface_area(&self) -> usize {
+    pub const fn surface_area(&self) -> usize {
         (2 * self.side_a()) + (2 * self.side_b()) + (2 * self.side_c())
     }
 

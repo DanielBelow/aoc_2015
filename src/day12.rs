@@ -2,8 +2,8 @@ use aoc_runner_derive::{aoc, aoc_generator};
 use serde_json::{Map, Value};
 
 #[aoc_generator(day12)]
-pub fn generate(inp: &str) -> Value {
-    inp.parse().unwrap()
+pub fn generate(inp: &str) -> Option<Value> {
+    inp.parse().ok()
 }
 
 fn is_red(val: &Value) -> bool {
@@ -49,7 +49,10 @@ mod tests {
         ];
 
         for (inp, expected) in test_data {
-            let json = generate(inp);
+            let Some(json) = generate(inp) else {
+                panic!("Failed to generate json")
+            };
+
             let res = part1(&json);
             assert_eq!(res, expected);
         }
@@ -65,7 +68,9 @@ mod tests {
         ];
 
         for (inp, expected) in test_data {
-            let json = generate(inp);
+            let Some(json) = generate(inp) else {
+                panic!("Failed to generate json")
+            };
             let res = part2(&json);
             assert_eq!(res, expected);
         }

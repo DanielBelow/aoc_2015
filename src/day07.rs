@@ -57,7 +57,7 @@ fn get_signal_on(
     cache: &mut HashMap<String, u16>,
 ) -> u16 {
     if cache.contains_key(signal) {
-        return *cache.get(signal).unwrap();
+        return *cache.get(signal).expect("Checked contains_key already");
     }
 
     let value = match conns.get(signal) {

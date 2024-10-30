@@ -61,7 +61,6 @@ mod tests {
         let mut combs = get_combinations(&inp, 25);
         let res = count_min_containers(&mut combs);
 
-        assert!(res.is_some());
-        assert_eq!(res.unwrap(), 3);
+        assert_eq!(res, Some(3));
     }
 }

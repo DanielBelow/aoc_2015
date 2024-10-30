@@ -132,8 +132,7 @@ fn get_item_combinations() -> Vec<Vec<Item>> {
 
     iproduct!(weapons, armor, rings)
         .map(|(w, a, r)| {
-            vec![w]
-                .iter()
+            std::iter::once(&w)
                 .chain(a.iter())
                 .chain(r.iter())
                 .copied()

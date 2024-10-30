@@ -1,9 +1,10 @@
 use aoc_runner_derive::{aoc, aoc_generator};
-use regex::Regex;
+use regex::{Error, Regex};
 use std::cmp::Ordering;
 use std::cmp::Ordering::{Equal, Greater, Less};
 use std::str::FromStr;
 
+#[derive(PartialEq, Eq, Debug)]
 pub struct Sue {
     idx: usize,
     children: Option<usize>,
@@ -18,13 +19,13 @@ pub struct Sue {
     perfumes: Option<usize>,
 }
 
-fn get_regex(s: &str) -> Regex {
+fn get_regex(s: &str) -> Result<Regex, Error> {
     let pattern = format!("{s}: ([0-9]+)");
-    Regex::new(&pattern).unwrap()
+    Regex::new(&pattern)
 }
 
 fn get_item(s: &str, item: &str) -> Option<usize> {
-    let re = get_regex(item);
+    let re = get_regex(item).ok()?;
     if re.is_match(s) {
         re.captures(s)
             .and_then(|it| it.get(1))
@@ -34,20 +35,23 @@ fn get_item(s: &str, item: &str) -> Option<usize> {
     }
 }
 
-fn get_idx(s: &str) -> usize {
-    let re = Regex::new("Sue ([0-9]+)").unwrap();
+fn get_idx(s: &str) -> Option<usize> {
+    let re = Regex::new("Sue ([0-9]+)").ok()?;
     re.captures(s)
         .and_then(|it| it.get(1))
         .and_then(|it| it.as_str().parse().ok())
-        .unwrap()
 }
 
 impl FromStr for Sue {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(Sue {
-            idx: get_idx(s),
+        let Some(idx) = get_idx(s) else {
+            return Err(());
+        };
+
+        Ok(Self {
+            idx,
             akitas: get_item(s, "akitas"),
             cars: get_item(s, "cars"),
             cats: get_item(s, "cats"),
@@ -117,11 +121,24 @@ mod tests {
         let inp = "Sue 1: goldfish: 6, trees: 9, akitas: 0";
         let data = generate(inp);
         assert_eq!(data.len(), 1);
-        let sue = data.first().unwrap();
-        assert_eq!(sue.idx, 1);
-        assert_eq!(sue.goldfish, Some(6));
-        assert_eq!(sue.trees, Some(9));
-        assert_eq!(sue.akitas, Some(0));
-        assert_eq!(sue.pomeranians, None);
+
+        let sue = data.first();
+
+        assert_eq!(
+            sue,
+            Some(&Sue {
+                idx: 1,
+                children: None,
+                cats: None,
+                goldfish: Some(6),
+                trees: Some(9),
+                cars: None,
+                akitas: Some(0),
+                pomeranians: None,
+                samoyeds: None,
+                vizslas: None,
+                perfumes: None,
+            })
+        );
     }
 }

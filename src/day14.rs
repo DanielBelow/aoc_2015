@@ -41,7 +41,7 @@ fn race_for(data: &[Reindeer], seconds: u64) -> u64 {
         .unwrap_or_default()
 }
 
-fn leading_reindeer_after(data: &[Reindeer], seconds: u64) -> Vec<String> {
+fn leading_reindeer_after(data: &[Reindeer], seconds: u64) -> Option<Vec<String>> {
     let positions = data
         .iter()
         .map(|it| (it, travel_distance(it, seconds)))
@@ -49,13 +49,15 @@ fn leading_reindeer_after(data: &[Reindeer], seconds: u64) -> Vec<String> {
         .rev()
         .collect_vec();
 
-    let (_, dist) = positions.iter().max_by_key(|(_, dist)| *dist).unwrap();
+    let (_, dist) = positions.iter().max_by_key(|(_, dist)| *dist)?;
 
-    positions
-        .iter()
-        .take_while(|(_, d)| *d == *dist)
-        .map(|(it, _)| it.name.clone())
-        .collect()
+    Some(
+        positions
+            .iter()
+            .take_while(|(_, d)| *d == *dist)
+            .map(|(it, _)| it.name.clone())
+            .collect(),
+    )
 }
 
 #[aoc(day14, part1)]
@@ -67,7 +69,7 @@ pub fn part1(data: &[Reindeer]) -> u64 {
 pub fn part2(data: &[Reindeer]) -> Option<i64> {
     let mut reindeer_points = HashMap::new();
     for t in 1..=2_503 {
-        let leading_reindeer = leading_reindeer_after(data, t);
+        let leading_reindeer = leading_reindeer_after(data, t)?;
         for r in leading_reindeer {
             reindeer_points
                 .entry(r)

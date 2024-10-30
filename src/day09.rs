@@ -25,7 +25,7 @@ pub fn generate(inp: &str) -> Vec<Connection> {
 fn get_nodes(conns: &[Connection]) -> HashSet<&String> {
     let mut nodes = HashSet::new();
 
-    for it in conns.iter() {
+    for it in conns {
         nodes.insert(&it.lhs);
         nodes.insert(&it.rhs);
     }
@@ -84,8 +84,7 @@ mod tests {
 
         let gen = generate(inp);
         let res = part1(&gen);
-        assert!(res.is_some());
-        assert_eq!(res.unwrap(), 605);
+        assert_eq!(res, Some(605));
     }
 
     #[test]
@@ -97,6 +96,6 @@ mod tests {
         let gen = generate(inp);
         let res = part2(&gen);
         assert!(res.is_some());
-        assert_eq!(res.unwrap(), 982);
+        assert_eq!(res, Some(982));
     }
 }

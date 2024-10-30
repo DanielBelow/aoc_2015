@@ -13,11 +13,11 @@ pub fn generate(inp: &str) -> Option<Entry> {
     inp.parse().ok()
 }
 
-fn sum_first_n_digits(n: usize) -> usize {
+const fn sum_first_n_digits(n: usize) -> usize {
     n * (n + 1) / 2
 }
 
-fn get_index_in_cantor(row: usize, col: usize) -> usize {
+const fn get_index_in_cantor(row: usize, col: usize) -> usize {
     sum_first_n_digits(col) + sum_first_n_digits(col + row - 2) - sum_first_n_digits(col - 1)
 }
 

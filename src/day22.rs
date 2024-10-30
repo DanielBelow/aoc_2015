@@ -23,7 +23,7 @@ struct Player {
 }
 
 impl Player {
-    fn new(hp: u32, mana: u32, dot: u32) -> Self {
+    const fn new(hp: u32, mana: u32, dot: u32) -> Self {
         Self {
             hp,
             mana,

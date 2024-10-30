@@ -9,7 +9,8 @@ pub fn generate(inp: &str) -> Vec<String> {
 
 fn string_value(s: &str) -> usize {
     lazy_static! {
-        static ref RE: Regex = Regex::new("(\\\\x[0-9A-Fa-f]{2})").unwrap();
+        static ref RE: Regex =
+            Regex::new("(\\\\x[0-9A-Fa-f]{2})").expect("Failure to create regex");
     }
 
     let mut s = s.replace("\\\\", "x");

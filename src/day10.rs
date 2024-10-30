@@ -2,8 +2,8 @@ use aoc_runner_derive::{aoc, aoc_generator};
 use itertools::Itertools;
 
 #[aoc_generator(day10)]
-pub fn generate(inp: &str) -> usize {
-    inp.parse().unwrap()
+pub fn generate(inp: &str) -> Option<usize> {
+    inp.parse().ok()
 }
 
 fn get_next_num(n: &str) -> String {
@@ -55,7 +55,10 @@ mod tests {
         ];
 
         for (inp, expected) in test_data {
-            let data = generate(inp);
+            let Some(data) = generate(inp) else {
+                panic!("Failed to parse input: {inp}");
+            };
+
             let next_num = get_next_num(&data.to_string());
             assert_eq!(next_num, expected);
         }

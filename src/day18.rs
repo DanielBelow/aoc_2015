@@ -9,10 +9,11 @@ pub fn generate(inp: &str) -> Vec<Vec<char>> {
     inp.lines().map(|it| it.chars().collect_vec()).collect()
 }
 
+#[allow(clippy::cast_possible_wrap)]
 fn count_neighbours(grid: &[Vec<char>], row: usize, col: usize, grid_size: usize) -> usize {
     let mut count = 0;
 
-    for (dx, dy) in iproduct!(-1..=1, -1..=1) {
+    for (dx, dy) in iproduct!(-1i64..=1, -1i64..=1) {
         if dx == 0 && dy == 0 {
             continue;
         }

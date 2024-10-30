@@ -125,7 +125,7 @@ mod tests {
         let gen = generate(test_data);
 
         let res = get_test_score(&gen, part1_pred);
-        assert_eq!(res.unwrap(), 62_842_880);
+        assert_eq!(res, Some(62_842_880));
     }
 
     #[test]
@@ -136,6 +136,6 @@ mod tests {
         let gen = generate(test_data);
 
         let res = get_test_score(&gen, part2_pred);
-        assert_eq!(res.unwrap(), 57_600_000);
+        assert_eq!(res, Some(57_600_000));
     }
 }

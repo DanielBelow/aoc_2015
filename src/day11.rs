@@ -67,7 +67,7 @@ fn increment_password(password: &str) -> String {
                 };
 
                 carry = false;
-                std::char::from_u32(it as u32 + inc_by).unwrap()
+                (it as u8 + inc_by) as char
             } else {
                 carry = true;
                 'a'

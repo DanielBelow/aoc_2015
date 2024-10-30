@@ -45,7 +45,6 @@ mod tests {
         let gen = vec![1usize, 2, 3, 4, 5, 7, 8, 9, 10, 11];
 
         let res = part1(&gen);
-        assert!(res.is_some());
-        assert_eq!(res.unwrap(), 99);
+        assert_eq!(res, Some(99));
     }
 }
